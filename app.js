@@ -4,13 +4,16 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const rotaUpload = require('./routes/upload');
 
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+app.use('/upload', rotaUploads);
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -23,7 +26,6 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/upload', rotaUpload);
 
 app.use((req, res, next) => {
     const erro = Error('Não encontrado');
